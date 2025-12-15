@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Bento Grid - Food Technology</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset and Global Styles */
+        :root {
+            --color-background: #f8f9fa; /* Soft White/Light Gray */
+            --color-card-bg: #ffffff; /* Pure White */
+            --color-text-primary: #212529; /* Dark Gray/Black */
+            --color-text-secondary: #6c757d; /* Medium Gray */
+            --color-accent: #004d99; /* Deep Ocean Blue (UMT Theme) */
+            --color-border: #e9ecef; /* Very Light Gray Border */
+            --border-radius: 12px;
+            --spacing: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            padding: var(--spacing);
+        }
+
+        /* Bento Grid Container */
+        .bento-grid-container {
+            display: grid;
+            gap: var(--spacing);
+            max-width: 1200px;
+            margin: 0 auto;
+            /* Default: Mobile - Stacked */
+            grid-template-columns: 1fr;
+        }
+
+        /* Card Styling */
+        .bento-card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            padding: var(--spacing);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .bento-card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--color-text-primary);
+        }
+
+        .card-content {
+            font-size: 0.9em;
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+        }
+
+        .card-content strong {
+            color: var(--color-text-primary);
+        }
+
+        /* Specific Card Styles */
+        
+        /* Card 1: Profile - Large Box */
+        .card-profile {
+            min-height: 250px;
+        }
+
+        .card-profile .profile-details {
+            margin-bottom: 15px;
+        }
+
+        .card-profile .profile-name {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 5px;
+        }
+
+        .card-profile .profile-tagline {
+            font-style: italic;
+            font-weight: 300;
+            color: var(--color-text-primary);
+            margin-bottom: 10px;
+        }
+
+        .card-profile .profile-program {
+            font-weight: 500;
+            color: var(--color-text-primary);
+        }
+
+        .social-links a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            margin-right: 15px;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .social-links a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Card 2: Location - Small Box */
+        .card-location {
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .card-location .time-display {
+            font-size: 2em;
+            font-weight: 300;
+            color: var(--color-text-primary);
+            margin-top: 5px;
+        }
+
+        /* Card 3: Tech Stack - Medium Box */
+        .card-tech-stack ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card-tech-stack li {
+            padding: 5px 0;
+            border-bottom: 1px dashed var(--color-border);
+            font-weight: 500;
+            color: var(--color-text-primary);
+        }
+
+        .card-tech-stack li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Card 6: Playlist - Wide Box */
+        .card-playlist {
+            /* Using the accent color for the wide, footer-like card */
+            background-color: var(--color-accent);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .card-playlist .card-title {
+            color: white;
+        }
+
+        .card-playlist .card-content {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Media Query for Desktop Layout (Grid) */
+        @media (min-width: 768px) {
+            .bento-grid-container {
+                /* Desktop: 3 column layout */
+                grid-template-columns: repeat(3, 1fr);
+                /* Explicit placement using grid-area names for clarity and control */
+                grid-template-areas: 
+                    "profile profile location"
+                    "profile profile tech"
+                    "case case tech" /* Changed case study to span 2 columns */
+                    "hobby hobby hobby" /* Changed hobby to span 3 columns for better flow */
+                    "playlist playlist playlist";
+            }
+
+            /* Assign cards to their specific grid areas */
+            .card-profile { grid-area: profile; }
+            .card-location { grid-area: location; }
+            .card-tech-stack { grid-area: tech; }
+            .card-case-study { grid-area: case; }
+            .card-hobby { grid-area: hobby; }
+            .card-playlist { grid-area: playlist; }
+
+            /* Ensure the large profile card and tall tech stack card fill their space */
+            .card-profile {
+                min-height: 400px;
+            }
+            
+            .card-tech-stack {
+                min-height: 400px; 
+            }
+            
+            .card-location {
+                min-height: 192px; /* Adjusted height to fill gap */
+                max-height: 192px;
+            }
+
+            .card-case-study {
+                min-height: 192px; /* Adjusted height to fill gap */
+                max-height: 192px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bento-grid-container">
+        
+        <div class="bento-card card-profile">
+            <div class="profile-details">
+                <div class="card-content">Hello, I'm</div>
+                <div class="profile-name">NUR SYAKIRAH BINTI ROSLI</div>
+                <p class="profile-tagline">"WHEN FOOD MEET SCIENCE."</p>
+                <p class="profile-program">Food Science (FOOD TECHNOLOGY) Student</p>
+                <p class="card-content"><strong>Universiti Malaysia Terengganu (UMT)</strong> - Year 1</p>
+            </div>
+            <div class="social-links">
+                <a href="#" target="_blank" title="LinkedIn">LinkedIn</a>
+                <a href="#" target="_blank" title="GitHub">GitHub</a>
+                <a href="#" target="_blank" title="UMT Portal">UMT Portal</a>
+            </div>
+        </div>
+
+        <div class="bento-card card-location">
+            <div class="card-content">
+                <p>📍 Current Location:</p>
+                <p><strong>UMT, Kuala Nerus</strong></p>
+                <p class="time-display">9:52 AM</p>
+            </div>
+        </div>
+
+        <div class="bento-card card-tech-stack">
+            <div class="card-title">📚 Current Semester Focus</div>
+            <ul class="card-content">
+                <li>Organic Chemistry</li>
+                <li>Biochemistry</li>
+                <li>Computer Application</li>
+                <li>Math Engineering</li>
+            </ul>
+        </div>
+
+        <div class="bento-card card-case-study">
+            <div class="card-title">💡 Food Innovation Project</div>
+            <p class="card-content">
+                <strong>Project Title: Retort Machine Project with IoT-BASED Sensor System.</strong> 
+                <br><br>
+                Exploring the integration of Internet of Things (IoT) sensors to monitor and optimize the food sterilization process in a retort machine for enhanced safety and efficiency.
+            </p>
+        </div>
+        
+        <div class="bento-card card-hobby">
+            <div class="card-title">😴 Hobby</div>
+            <p class="card-content">
+                My most dedicated activity: **Sleeping**. (Essential for a focused Food Scientist!)
+            </p>
+        </div>
+
+        <div class="bento-card card-playlist">
+            <div class="card-title">🎶 Study Session Soundtrack</div>
+            <p class="card-content">
+                [Placeholder: Embed Music Player Here] <br> Lo-Fi Beats & Instrumental Jazz
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>
